@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chácara Quintino — Hospedagem & Eventos</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; color: #2d2a24; background: #faf8f5; }
+        img { max-width: 100%; height: auto; display: block; }
+        a { text-decoration: none; color: inherit; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+        /* ===== HERO ===== */
+        .hero {
+            height: 100vh; min-height: 600px;
+            background: linear-gradient(135deg, #1a3a2a 0%, #2d5a3e 50%, #3d7a52 100%);
+            display: flex; align-items: center; justify-content: center;
+            position: relative; overflow: hidden;
+        }
+        .hero::before {
+            content: ''; position: absolute; inset: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 900"><path fill="rgba(255,255,255,0.03)" d="M0,600 C360,400 720,800 1080,500 S1440,300 1440,300 L1440,900 L0,900 Z"/></svg>') bottom/cover no-repeat;
+        }
+        .hero-content { position: relative; text-align: center; color: #fff; padding: 24px; }
+        .hero-badge {
+            display: inline-block; background: rgba(255,255,255,0.15); backdrop-filter: blur(8px);
+            padding: 8px 20px; border-radius: 50px; font-size: 14px; font-weight: 600;
+            letter-spacing: 1px; text-transform: uppercase; margin-bottom: 24px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .hero h1 { font-size: clamp(2.8rem, 7vw, 5rem); font-weight: 800; line-height: 1.1; margin-bottom: 16px; }
+        .hero h1 span { color: #a8e6cf; }
+        .hero p { font-size: clamp(1.1rem, 2vw, 1.4rem); opacity: 0.9; max-width: 600px; margin: 0 auto 32px; line-height: 1.6; }
+        .hero-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+        .btn {
+            display: inline-flex; align-items: center; gap: 10px;
+            padding: 14px 32px; border-radius: 50px; font-weight: 600; font-size: 16px;
+            transition: all 0.3s; cursor: pointer; border: none;
+        }
+        .btn-primary { background: #fff; color: #1a3a2a; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,0,0,0.2); }
+        .btn-outline { background: transparent; color: #fff; border: 2px solid rgba(255,255,255,0.4); }
+        .btn-outline:hover { border-color: #fff; background: rgba(255,255,255,0.1); transform: translateY(-2px); }
+        .btn-whatsapp { background: #25D366; color: #fff; }
+        .btn-whatsapp:hover { background: #1ebe5d; transform: translateY(-2px); box-shadow: 0 8px 30px rgba(37,211,102,0.3); }
+
+        /* ===== NAV ===== */
+        .nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            padding: 16px 24px; display: flex; justify-content: space-between; align-items: center;
+            transition: all 0.3s; background: transparent;
+        }
+        .nav.scrolled { background: rgba(26,58,42,0.95); backdrop-filter: blur(12px); padding: 12px 24px; }
+        .nav-logo { font-weight: 800; font-size: 20px; color: #fff; letter-spacing: -0.5px; }
+        .nav-links { display: flex; gap: 28px; list-style: none; }
+        .nav-links a { color: rgba(255,255,255,0.8); font-size: 14px; font-weight: 500; transition: color 0.3s; }
+        .nav-links a:hover { color: #fff; }
+        .nav-instagram { display: flex; align-items: center; gap: 6px; }
+        .nav-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+        .nav-toggle span { width: 24px; height: 2px; background: #fff; border-radius: 2px; transition: all 0.3s; }
+
+        /* ===== SECTIONS ===== */
+        section { padding: 100px 0; }
+        .section-tag {
+            display: inline-block; font-size: 13px; font-weight: 700; letter-spacing: 2px;
+            text-transform: uppercase; color: #3d7a52; margin-bottom: 12px;
+        }
+        .section-title { font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 800; line-height: 1.2; margin-bottom: 20px; color: #1a3a2a; }
+        .section-sub { font-size: 1.1rem; line-height: 1.7; color: #666; max-width: 700px; margin-bottom: 48px; }
+
+        /* ===== SOBRE ===== */
+        .sobre-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
+        }
+        .sobre-grid .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .stat-card {
+            background: #fff; padding: 24px; border-radius: 16px; text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.04); border: 1px solid #eee;
+        }
+        .stat-card .num { font-size: 2rem; font-weight: 800; color: #3d7a52; }
+        .stat-card .label { font-size: 13px; color: #888; margin-top: 4px; font-weight: 500; }
+
+        /* ===== DIFERENCIAIS ===== */
+        .diffs-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px;
+        }
+        .diff-card {
+            background: #fff; padding: 32px; border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.04); border: 1px solid #eee;
+            transition: all 0.3s;
+        }
+        .diff-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.08); }
+        .diff-card .icon { font-size: 2.4rem; margin-bottom: 16px; }
+        .diff-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; color: #1a3a2a; }
+        .diff-card p { font-size: 14px; color: #777; line-height: 1.6; }
+
+        /* ===== EVENTOS ===== */
+        .bg-alt { background: #f0f5f0; }
+        .eventos-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;
+        }
+        .evento-card {
+            background: #fff; padding: 28px; border-radius: 16px; text-align: center;
+            border: 1px solid #e8ede8; transition: all 0.3s;
+        }
+        .evento-card:hover { border-color: #3d7a52; }
+        .evento-card .emoji { font-size: 2.8rem; margin-bottom: 12px; }
+        .evento-card h4 { font-size: 1rem; font-weight: 700; color: #1a3a2a; }
+
+        /* ===== ESPAÇOS ===== */
+        .espacos-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px;
+        }
+        .espaco-card {
+            background: #fff; border-radius: 20px; overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.04); border: 1px solid #eee;
+            transition: all 0.3s;
+        }
+        .espaco-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.08); }
+        .espaco-card-img {
+            height: 200px; background: linear-gradient(135deg, #2d5a3e, #4a8c6a);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 3rem; color: rgba(255,255,255,0.6);
+        }
+        .espaco-card-body { padding: 24px; }
+        .espaco-card-body h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; color: #1a3a2a; }
+        .espaco-card-body p { font-size: 14px; color: #777; line-height: 1.6; }
+
+        /* ===== AVALIAÇÕES ===== */
+        .avaliacoes-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px;
+        }
+        .aval-card {
+            background: #fff; padding: 28px; border-radius: 16px;
+            border: 1px solid #eee; box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+        }
+        .aval-card .stars { color: #f5b342; font-size: 1.1rem; margin-bottom: 12px; }
+        .aval-card blockquote { font-size: 15px; line-height: 1.7; color: #555; font-style: italic; margin-bottom: 16px; }
+        .aval-card .author { font-size: 13px; font-weight: 600; color: #1a3a2a; }
+        .rating-big {
+            text-align: center; margin-bottom: 48px;
+        }
+        .rating-big .score { font-size: 3.5rem; font-weight: 800; color: #3d7a52; }
+        .rating-big .stars-big { font-size: 1.6rem; color: #f5b342; margin: 8px 0; }
+        .rating-big p { font-size: 14px; color: #888; }
+
+        /* ===== GALERIA ===== */
+        .galeria-placeholder {
+            background: #e8ede8; border-radius: 20px; padding: 60px; text-align: center;
+        }
+        .galeria-placeholder p { color: #888; font-size: 1.1rem; }
+        .galeria-placeholder .icon-grande { font-size: 3rem; margin-bottom: 16px; }
+
+        /* ===== CTA ===== */
+        .cta-section {
+            background: linear-gradient(135deg, #1a3a2a 0%, #2d5a3e 50%, #3d7a52 100%);
+            text-align: center; color: #fff; padding: 100px 0;
+        }
+        .cta-section h2 { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 800; margin-bottom: 16px; }
+        .cta-section p { opacity: 0.85; font-size: 1.1rem; max-width: 500px; margin: 0 auto 36px; line-height: 1.6; }
+        .cta-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: #141f1a; color: rgba(255,255,255,0.6); padding: 40px 0; text-align: center; font-size: 14px;
+        }
+        footer .social-links { display: flex; justify-content: center; gap: 20px; margin-bottom: 16px; }
+        footer .social-links a { color: rgba(255,255,255,0.5); font-size: 14px; transition: color 0.3s; }
+        footer .social-links a:hover { color: #a8e6cf; }
+
+        /* ===== MOBILE ===== */
+        @media (max-width: 768px) {
+            .nav-links { display: none; position: fixed; top: 60px; left: 0; right: 0;
+                background: rgba(26,58,42,0.98); flex-direction: column; padding: 24px; gap: 20px;
+                backdrop-filter: blur(12px);
+            }
+            .nav-links.open { display: flex; }
+            .nav-toggle { display: flex; }
+            .sobre-grid { grid-template-columns: 1fr; gap: 40px; }
+            .hero h1 { font-size: 2.4rem; }
+            .hero-actions { flex-direction: column; align-items: center; }
+            .cta-actions { flex-direction: column; align-items: center; }
+            section { padding: 60px 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAV -->
+    <nav class="nav" id="nav">
+        <div class="nav-logo">🌿 Chácara Quintino</div>
+        <button class="nav-toggle" id="navToggle" aria-label="Menu">
+            <span></span><span></span><span></span>
+        </button>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#sobre">Sobre</a></li>
+            <li><a href="#espacos">Espaços</a></li>
+            <li><a href="#eventos">Eventos</a></li>
+            <li><a href="#avaliacoes">Avaliações</a></li>
+            <li><a href="#contato">Contato</a></li>
+            <li><a href="https://www.instagram.com/chacara.quintino" target="_blank" class="nav-instagram">📷 Instagram</a></li>
+        </ul>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">⭐ Preferido dos hóspedes · Nota 4,92</div>
+            <h1>Chácara <span>Quintino</span></h1>
+            <p>Seu refúgio em Araquari, Santa Catarina. 7.500 m² de natureza, conforto e momentos inesquecíveis para toda a família.</p>
+            <div class="hero-actions">
+                <a href="https://www.airbnb.com.br/rooms/674537968706055211" target="_blank" class="btn btn-primary">
+                    🏡 Ver no Airbnb
+                </a>
+                <a href="https://wa.me/5547999788646" target="_blank" class="btn btn-whatsapp">
+                    💬 Reservar pelo WhatsApp
+                </a>
+                <a href="#espacos" class="btn btn-outline">
+                    Explorar espaços ↓
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- SOBRE -->
+    <section id="sobre">
+        <div class="container">
+            <div class="sobre-grid">
+                <div>
+                    <span class="section-tag">🌳 Sobre</span>
+                    <h2 class="section-title">Um refúgio completo em meio à natureza</h2>
+                    <p class="section-sub" style="margin-bottom: 24px;">
+                        A Chácara Quintino é o destino ideal para quem busca tranquilidade, diversão e contato com a natureza.
+                        Com <strong>7.500 m²</strong> de área total, oferecemos uma experiência única de hospedagem e um espaço
+                        encantador para eventos especiais.
+                    </p>
+                    <p style="color:#666; line-height:1.7; margin-bottom: 32px;">
+                        Relaxe com toda a família nesta acomodação tranquila, com espaço totalmente privado para o hóspede!
+                        A propriedade conta com piscina de 42 mil litros, quiosque, lago, fogão a lenha, churrasqueira,
+                        galinheiro, pomar e terreno todo cercado. Nos fundos do terreno passa o <strong>rio Piraí</strong>.
+                    </p>
+                    <a href="https://www.airbnb.com.br/rooms/674537968706055211" target="_blank" class="btn btn-primary" style="background:#1a3a2a; color:#fff;">
+                        📍 Ver localização no Airbnb
+                    </a>
+                </div>
+                <div class="stats">
+                    <div class="stat-card">
+                        <div class="num">7.500</div>
+                        <div class="label">m² de área total</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="num">10</div>
+                        <div class="label">Hóspedes</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="num">3</div>
+                        <div class="label">Quartos · 9 camas</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="num">4,92</div>
+                        <div class="label">⭐ Nota no Airbnb</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DIFERENCIAIS -->
+    <section class="bg-alt">
+        <div class="container">
+            <span class="section-tag">✨ Diferenciais</span>
+            <h2 class="section-title">Tudo que você merece</h2>
+            <p class="section-sub">Cada detalhe foi pensado para proporcionar conforto, diversão e boas memórias.</p>
+            <div class="diffs-grid">
+                <div class="diff-card">
+                    <div class="icon">🏊</div>
+                    <h3>Piscina 42 mil litros</h3>
+                    <p>Piscina ampla e climatizada — a diversão é garantida em qualquer estação.</p>
+                </div>
+                <div class="diff-card">
+                    <div class="icon">⚽</div>
+                    <h3>Mini campo de futebol</h3>
+                    <p>Espaço para partidas e brincadeiras ao ar livre.</p>
+                </div>
+                <div class="diff-card">
+                    <div class="icon">🎉</div>
+                    <h3>Salão de festas coberto</h3>
+                    <p>Área coberta completa para confraternizações, aniversários e eventos.</p>
+                </div>
+                <div class="diff-card">
+                    <div class="icon">🔥</div>
+                    <h3>Churrasqueira & fogão a lenha</h3>
+                    <p>Prepare aquele churrasco ou uma comida caseira no fogão a lenha.</p>
+                </div>
+                <div class="diff-card">
+                    <div class="icon">🛝</div>
+                    <h3>Parquinho infantil</h3>
+                    <p>Espaço seguro para as crianças se divertirem à vontade.</p>
+                </div>
+                <div class="diff-card">
+                    <div class="icon">🌿</div>
+                    <h3>Natureza preservada</h3>
+                    <p>Lago, pomar, galinheiro e acesso ao rio Piraí — puro contato com o campo.</p>
+                </div>
+                <div class="diff-card">
+                    <div class="icon">📶</div>
+                    <h3>Wi-Fi disponível</h3>
+                    <p>Conectividade para quem não quer ficar totalmente off-line.</p>
+                </div>
+                <div class="diff-card">
+                    <div class="icon">🚗</div>
+                    <h3>Estacionamento amplo</h3>
+                    <p>Espaço de sobra para receber todos os seus convidados.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ESPAÇOS -->
+    <section id="espacos">
+        <div class="container">
+            <span class="section-tag">🏡 Acomodação</span>
+            <h2 class="section-title">Sua casa no campo</h2>
+            <p class="section-sub">Espaço inteiro para você e sua família — 3 quartos, 2 banheiros, sala, cozinha completa e muito mais.</p>
+            <div class="espacos-grid">
+                <div class="espaco-card">
+                    <div class="espaco-card-img" style="background: linear-gradient(135deg, #2d5a3e, #5a9a7a);">🛏️</div>
+                    <div class="espaco-card-body">
+                        <h3>Quarto 1</h3>
+                        <p>1 cama de casal, 1 cama de solteiro, 1 cama infantil — ideal para famílias.</p>
+                    </div>
+                </div>
+                <div class="espaco-card">
+                    <div class="espaco-card-img" style="background: linear-gradient(135deg, #3a6a4e, #6aaa8a);">🛏️</div>
+                    <div class="espaco-card-body">
+                        <h3>Quarto 2</h3>
+                        <p>1 cama de casal, 1 beliche, 1 colchão extra — bastante espaço para todos.</p>
+                    </div>
+                </div>
+                <div class="espaco-card">
+                    <div class="espaco-card-img" style="background: linear-gradient(135deg, #4a7a5e, #7aba9a);">🛏️</div>
+                    <div class="espaco-card-body">
+                        <h3>Quarto 3</h3>
+                        <p>1 cama de casal, 2 camas de solteiro — conforto para mais hóspedes.</p>
+                    </div>
+                </div>
+                <div class="espaco-card">
+                    <div class="espaco-card-img" style="background: linear-gradient(135deg, #1a3a2a, #4a8a6a);">🛋️</div>
+                    <div class="espaco-card-body">
+                        <h3>Sala de estar</h3>
+                        <p>Sofá-cama, TV e ambiente aconchegante para descansar e reunir a família.</p>
+                    </div>
+                </div>
+                <div class="espaco-card">
+                    <div class="espaco-card-img" style="background: linear-gradient(135deg, #5a4a3a, #9a8a6a);">🍳</div>
+                    <div class="espaco-card-body">
+                        <h3>Cozinha completa</h3>
+                        <p>Tudo que você precisa para preparar suas refeições com praticidade.</p>
+                    </div>
+                </div>
+                <div class="espaco-card">
+                    <div class="espaco-card-img" style="background: linear-gradient(135deg, #2a5a4a, #5a9a8a);">🌳</div>
+                    <div class="espaco-card-body">
+                        <h3>Área externa</h3>
+                        <p>Piscina, quiosque, lago, churrasqueira — o melhor da vida ao ar livre.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- EVENTOS -->
+    <section id="eventos" class="bg-alt">
+        <div class="container">
+            <span class="section-tag">🎊 Eventos</span>
+            <h2 class="section-title">O cenário perfeito para sua festa</h2>
+            <p class="section-sub">
+                Seja um aniversário, casamento, chá de bebê, confraternização ou ensaio fotográfico —
+                a Chácara Quintino oferece o espaço ideal com liberdade para decorar do seu jeito.
+            </p>
+            <div class="eventos-grid">
+                <div class="evento-card">
+                    <div class="emoji">🎂</div>
+                    <h4>Aniversários</h4>
+                </div>
+                <div class="evento-card">
+                    <div class="emoji">💍</div>
+                    <h4>Casamentos</h4>
+                </div>
+                <div class="evento-card">
+                    <div class="emoji">👶</div>
+                    <h4>Chá de Bebê / Chá Revelação</h4>
+                </div>
+                <div class="evento-card">
+                    <div class="emoji">🤝</div>
+                    <h4>Confraternizações</h4>
+                </div>
+                <div class="evento-card">
+                    <div class="emoji">📸</div>
+                    <h4>Ensaios Fotográficos</h4>
+                </div>
+                <div class="evento-card">
+                    <div class="emoji">🏢</div>
+                    <h4>Eventos corporativos</h4>
+                </div>
+            </div>
+            <div style="text-align:center; margin-top: 40px;">
+                <p style="color:#666; margin-bottom: 20px;">✅ Playground e espaço para brinquedos infláveis · ✅ Liberdade para decorar do seu jeito · ✅ Estacionamento vasto</p>
+                <a href="https://wa.me/5547999788646" target="_blank" class="btn btn-whatsapp">💬 Consulte datas e valores</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- AVALIAÇÕES -->
+    <section id="avaliacoes">
+        <div class="container">
+            <span class="section-tag">⭐ Avaliações</span>
+            <h2 class="section-title">O que os hóspedes dizem</h2>
+            <div class="rating-big">
+                <div class="score">4,92</div>
+                <div class="stars-big">★★★★★</div>
+                <p>13 avaliações · Preferido dos hóspedes · Top 10% do Airbnb</p>
+            </div>
+            <div class="avaliacoes-grid">
+                <div class="aval-card">
+                    <div class="stars">★★★★★</div>
+                    <blockquote>"A chácara é muito aconchegante. Se você quiser relaxar e precisa de um lugar tranquilo pode ir de olhos fechados. A piscina é uma delícia! A casa é bem completa, tem tudo que você precisa. O espaço externo então nem se fala."</blockquote>
+                    <div class="author">— Jussara · jan/2026</div>
+                </div>
+                <div class="aval-card">
+                    <div class="stars">★★★★★</div>
+                    <blockquote>"Chacara linda, ficamos encantados. Ótimo espaço com piscina. Fui com minha família, todos amaram e querem voltar. Super atenciosos em todo o momento, e a limpeza do lugar, incrível."</blockquote>
+                    <div class="author">— Maira · jan/2025</div>
+                </div>
+                <div class="aval-card">
+                    <div class="stars">★★★★★</div>
+                    <blockquote>"Foram dias legais no espaço. O Darlan junto com a sua esposa foram ótimos. Voltaremos mais vezes. Recomendo para quem curte natureza e tranquilidade."</blockquote>
+                    <div class="author">— Kardson · jun/2025</div>
+                </div>
+                <div class="aval-card">
+                    <div class="stars">★★★★★</div>
+                    <blockquote>"Adoramos a estadia, os anfitriões foram muito atenciosos. Voltaremos com certeza."</blockquote>
+                    <div class="author">— Michelle · mar/2025</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GALERIA -->
+    <section class="bg-alt">
+        <div class="container">
+            <span class="section-tag">📷 Galeria</span>
+            <h2 class="section-title">Veja mais no Instagram</h2>
+            <p class="section-sub">Acompanhe o dia a dia, promoções e novidades da Chácara Quintino no Instagram.</p>
+            <div class="galeria-placeholder">
+                <div class="icon-grande">📸</div>
+                <p style="margin-bottom: 20px;">As fotos reais estão no nosso Instagram!</p>
+                <a href="https://www.instagram.com/chacara.quintino" target="_blank" class="btn btn-primary" style="background:#1a3a2a; color:#fff; display:inline-flex;">
+                    📷 Ver no Instagram
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section" id="contato">
+        <div class="container">
+            <h2>Vem viver essa experiência 🌿</h2>
+            <p>Reserve sua estadia ou consulte datas disponíveis para seu evento. Será um prazer receber você e sua família!</p>
+            <div class="cta-actions">
+                <a href="https://www.airbnb.com.br/rooms/674537968706055211" target="_blank" class="btn btn-primary">
+                    🏡 Ver disponibilidade no Airbnb
+                </a>
+                <a href="https://wa.me/5547999788646" target="_blank" class="btn btn-whatsapp">
+                    💬 Fale conosco no WhatsApp
+                </a>
+                <a href="https://www.instagram.com/chacara.quintino" target="_blank" class="btn btn-outline">
+                    📷 Instagram
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="social-links">
+                <a href="https://www.instagram.com/chacara.quintino" target="_blank">📷 Instagram</a>
+                <a href="https://www.airbnb.com.br/rooms/674537968706055211" target="_blank">🏡 Airbnb</a>
+                <a href="https://wa.me/5547999788646" target="_blank">💬 WhatsApp</a>
+            </div>
+            <p>© 2026 Chácara Quintino · Araquari, Santa Catarina</p>
+            <p style="margin-top:8px; font-size:12px; opacity:0.5;">🌿 Natureza, conforto e momentos inesquecíveis</p>
+        </div>
+    </footer>
+
+    <script>
+        // Nav scroll effect
+        const nav = document.getElementById('nav');
+        window.addEventListener('scroll', () => {
+            nav.classList.toggle('scrolled', window.scrollY > 60);
+        });
+
+        // Mobile nav toggle
+        const toggle = document.getElementById('navToggle');
+        const links = document.getElementById('navLinks');
+        toggle.addEventListener('click', () => {
+            links.classList.toggle('open');
+        });
+        // Close on link click
+        links.querySelectorAll('a').forEach(a => {
+            a.addEventListener('click', () => links.classList.remove('open'));
+        });
+    </script>
+
+</body>
+</html>
